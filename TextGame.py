@@ -21,19 +21,28 @@ def clear():
 def entry_room():
     clear()
     global current_room
-    #print(f"{Fore.BLUE}{Back.CYAN}entry {Back.RESET}{Fore.GREEN} room{Style.RESET_ALL}")
     print(f"{Fore.RED}{Back.CYAN}entry{Fore.RESET}{Back.RESET} {Fore.GREEN}room{Fore.RESET}")
 
     print("Options")
     print("-----------------")
     print("kitchen")
     print("living room")
+    print("[exit] front door")
     print("")
     choice = input("Enter choice: ")
     if(choice == "kitchen"):
         current_room = "kitchen"
     if(choice == "living room"):
         current_room = "living room"
+    if(choice == "exit"):
+        if crowbar == False or passcode == False:
+            print("You try to exit the house but the door is jammed and"
+                  " a passcode is required.")
+        else:
+            print("You pry the door open with the crowbar, and enter"
+                  " the passcode found in the library, the door opens!!")
+            current_room = "outside"
+        time.sleep(4)
 
 def kitchen():
     clear()
@@ -109,7 +118,7 @@ def library():
     print("Options")
     print("-----------------")
     print(f"Return to {Fore.RED}living room{Fore.RESET}")
-    if logbook == False:
+    if passcode == False:
         print(f"Pick up {Fore.RED}passcode{Fore.RESET}")
     print("")
     choice = input("Enter choice: ")
@@ -125,7 +134,7 @@ def library():
 
 
 #Begin Main Program
-while True:
+while not current_room == "outside":
     if(current_room == "entry room"):
         entry_room()
     if(current_room == "kitchen"):
@@ -136,3 +145,7 @@ while True:
         livingRoom()
     if(current_room == "library"):
         library()
+
+#ending one
+if current_room == "outside":
+    print("You exit the house safely!!!! Congratulations!")
