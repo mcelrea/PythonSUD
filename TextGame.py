@@ -7,6 +7,8 @@ from colorama import Back
 #variables
 current_room = "entry room"
 crowbar = False
+logbook = False
+passcode = False
 
 #function definitions
 #rooms, helper functions
@@ -25,10 +27,13 @@ def entry_room():
     print("Options")
     print("-----------------")
     print("kitchen")
+    print("living room")
     print("")
     choice = input("Enter choice: ")
     if(choice == "kitchen"):
         current_room = "kitchen"
+    if(choice == "living room"):
+        current_room = "living room"
 
 def kitchen():
     clear()
@@ -69,6 +74,54 @@ def basement():
         crowbar = True;
         time.sleep(2)
 
+def livingRoom():
+    clear()
+    global current_room
+    global logbook
+    print("living room")
+
+    print("Options")
+    print("-----------------")
+    print(f"Return to {Fore.RED}entry room{Fore.RESET}")
+    print(f"Go to {Fore.RED}library{Fore.RESET}")
+    if logbook == False:
+        print(f"Pick up {Fore.RED}logbook{Fore.RESET}")
+    print("")
+    choice = input("Enter choice: ")
+    if(choice == "entry room"):
+        current_room = "entry room"
+    if(choice == "library"):
+        current_room = "library"
+    if(choice == "logbook"):
+        if logbook == False:
+            print("You picked up the logbook!!!")
+        else:
+            print("You already have the logbook dummy!")
+        logbook = True;
+        time.sleep(2)
+
+def library():
+    clear()
+    global current_room
+    global passcode
+    print("library")
+
+    print("Options")
+    print("-----------------")
+    print(f"Return to {Fore.RED}living room{Fore.RESET}")
+    if logbook == False:
+        print(f"Pick up {Fore.RED}passcode{Fore.RESET}")
+    print("")
+    choice = input("Enter choice: ")
+    if(choice == "living room"):
+        current_room = "living room"
+    if(choice == "passcode"):
+        if passcode == False:
+            print("You picked up the passcode!!!")
+        else:
+            print("You already have the passcode dummy!")
+        passcode = True;
+        time.sleep(2)
 
 
 #Begin Main Program
@@ -79,3 +132,7 @@ while True:
         kitchen()
     if(current_room == "basement"):
         basement()
+    if(current_room == "living room"):
+        livingRoom()
+    if(current_room == "library"):
+        library()
